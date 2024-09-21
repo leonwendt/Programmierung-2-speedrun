@@ -1,6 +1,6 @@
 # programmierung_2
 
-Programmierung 2 von Leon und Linus
+Programmierung 2 Speedrun von Leon und Linus
 
 ## Getting Started
 
