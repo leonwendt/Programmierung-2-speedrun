@@ -10,9 +10,28 @@ class CurrencyConverterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Currency Converter',
+      title: 'CurrenC',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark, // Setzt das Thema auf dunkel
+        primarySwatch: Colors.blueGrey,
+        colorScheme: ColorScheme.dark(
+          secondary: Color(0xFFFFE4B5), // Cremefarbener Akzent
+        ),
+        scaffoldBackgroundColor: Colors.black, // Hintergrund der App auf schwarz
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white70),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFFFE4B5), // Cremefarbe für Buttons
+            foregroundColor: Colors.black, // Textfarbe auf Buttons
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
       ),
       home: const HomePage(),
     );
@@ -32,7 +51,6 @@ class _HomePageState extends State<HomePage> {
   String _toCurrency = 'EUR';
   double _result = 0.0;
 
-  // Fake exchange rates for demo purposes
   final Map<String, double> exchangeRates = {
     'USD': 1.0,
     'EUR': 0.85,
@@ -40,7 +58,6 @@ class _HomePageState extends State<HomePage> {
     'INR': 74.0,
   };
 
-  // Convert function for calculation
   void _convertCurrency() {
     double amount = double.tryParse(_amountController.text) ?? 0.0;
     double fromRate = exchangeRates[_fromCurrency]!;
@@ -54,7 +71,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Currency Converter'),
+        title: const Text('CurrenC'),
+        backgroundColor: Colors.black87,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -64,9 +83,17 @@ class _HomePageState extends State<HomePage> {
             TextField(
               controller: _amountController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Enter Amount',
+                labelStyle: const TextStyle(color: Colors.white),
+                filled: true,
+                fillColor: Colors.grey[800], // Textfeld Hintergrund dunkel
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
               ),
+              style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 20),
             Row(
@@ -85,8 +112,13 @@ class _HomePageState extends State<HomePage> {
                       _fromCurrency = newValue!;
                     });
                   },
+                  dropdownColor: Colors.grey[850], // Dropdown-Hintergrund dunkel
+                  style: const TextStyle(color: Colors.white), // Textfarbe im Dropdown
                 ),
-                const Text('to'),
+                const Text(
+                  'to',
+                  style: TextStyle(color: Colors.white),
+                ),
                 DropdownButton<String>(
                   value: _toCurrency,
                   items: exchangeRates.keys.map((String value) {
@@ -100,6 +132,8 @@ class _HomePageState extends State<HomePage> {
                       _toCurrency = newValue!;
                     });
                   },
+                  dropdownColor: Colors.grey[850], // Dropdown-Hintergrund dunkel
+                  style: const TextStyle(color: Colors.white), // Textfarbe im Dropdown
                 ),
               ],
             ),
@@ -113,7 +147,7 @@ class _HomePageState extends State<HomePage> {
               _result == 0.0
                   ? 'Enter amount to see the result'
                   : 'Result: $_result $_toCurrency',
-              style: const TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
           ],
         ),
