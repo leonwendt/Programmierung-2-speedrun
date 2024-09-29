@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart'; // Für custom Fonts
 
 void main() {
   runApp(const CurrencyConverterApp());
@@ -12,20 +13,20 @@ class CurrencyConverterApp extends StatelessWidget {
     return MaterialApp(
       title: 'CurrenC',
       theme: ThemeData(
-        brightness: Brightness.dark, // Setzt das Thema auf dunkel
+        brightness: Brightness.dark,
         primarySwatch: Colors.blueGrey,
         colorScheme: ColorScheme.dark(
           secondary: Color(0xFFFFE4B5), // Cremefarbener Akzent
         ),
-        scaffoldBackgroundColor: Colors.black, // Hintergrund der App auf schwarz
+        scaffoldBackgroundColor: Colors.black,
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white70),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFFFE4B5), // Cremefarbe für Buttons
-            foregroundColor: Colors.black, // Textfarbe auf Buttons
+            backgroundColor: Color(0xFFFFE4B5),
+            foregroundColor: Colors.black,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -46,7 +47,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _fromAmountController = TextEditingController();
+  final TextEditingController _toAmountController = TextEditingController();
   String _fromCurrency = 'USD';
   String _toCurrency = 'EUR';
   double _result = 0.0;
@@ -58,46 +60,112 @@ class _HomePageState extends State<HomePage> {
     'INR': 74.0,
   };
 
-  void _convertCurrency() {
-    double amount = double.tryParse(_amountController.text) ?? 0.0;
-    double fromRate = exchangeRates[_fromCurrency]!;
-    double toRate = exchangeRates[_toCurrency]!;
+  void _convertCurrency(bool reverse) {
+    double amount = reverse
+        ? double.tryParse(_toAmountController.text) ?? 0.0
+        : double.tryParse(_fromAmountController.text) ?? 0.0;
+
+    double fromRate = reverse
+        ? exchangeRates[_toCurrency]!
+        : exchangeRates[_fromCurrency]!;
+    double toRate = reverse
+        ? exchangeRates[_fromCurrency]!
+        : exchangeRates[_toCurrency]!;
+
     setState(() {
       _result = (amount / fromRate) * toRate;
+      if (reverse) {
+        _fromAmountController.text = _result.toStringAsFixed(2);
+      } else {
+        _toAmountController.text = _result.toStringAsFixed(2);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Berechne den Wechselkurs zwischen den beiden ausgewählten Währungen
+    double exchangeRate = exchangeRates[_toCurrency]! / exchangeRates[_fromCurrency]!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CurrenC'),
+        title: Text(
+          'CurrenC',
+          style: GoogleFonts.montserrat( // Ändere hier zu Poppins oder einem anderen Font
+            textStyle: const TextStyle(
+              color: Color(0xFFFFE4B5), // Cremefarbene Farbe
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         backgroundColor: Colors.black87,
-        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Enter Amount',
-                labelStyle: const TextStyle(color: Colors.white),
-                filled: true,
-                fillColor: Colors.grey[800], // Textfeld Hintergrund dunkel
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white),
-                ),
-              ),
-              style: const TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.28,
+                  child: TextField(
+                    controller: _fromAmountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey[800],
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFFFE4B5),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                    onChanged: (value) {
+                      _convertCurrency(false);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.28,
+                  child: TextField(
+                    controller: _toAmountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey[800],
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFFFE4B5),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                    onChanged: (value) {
+                      _convertCurrency(true);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Zentriert die gesamte Row
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 DropdownButton<String>(
                   value: _fromCurrency,
@@ -111,14 +179,50 @@ class _HomePageState extends State<HomePage> {
                     setState(() {
                       _fromCurrency = newValue!;
                     });
+                    _convertCurrency(false);
                   },
-                  dropdownColor: Colors.grey[850], // Dropdown-Hintergrund dunkel
-                  style: const TextStyle(color: Colors.white), // Textfarbe im Dropdown
+                  dropdownColor: Colors.grey[850],
+                  style: const TextStyle(color: Colors.white),
                 ),
-                const Text(
-                  'to',
-                  style: TextStyle(color: Colors.white),
+                const SizedBox(width: 15),
+
+                // Flexible Widgets für Währungswerte
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '1 $_fromCurrency',
+                        style: const TextStyle(color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
+
+                // Container für das Gleichheitszeichen mit fester Breite
+                Container(
+                  width: 30, // Feste Breite für das Gleichheitszeichen
+                  alignment: Alignment.center,
+                  child: Text(
+                    '=',
+                    style: const TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
+                ),
+
+                // Flexible Widgets für den Währungswert rechts
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${exchangeRate.toStringAsFixed(2)} $_toCurrency',
+                        style: const TextStyle(color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(width: 15),
                 DropdownButton<String>(
                   value: _toCurrency,
                   items: exchangeRates.keys.map((String value) {
@@ -131,23 +235,12 @@ class _HomePageState extends State<HomePage> {
                     setState(() {
                       _toCurrency = newValue!;
                     });
+                    _convertCurrency(true);
                   },
-                  dropdownColor: Colors.grey[850], // Dropdown-Hintergrund dunkel
-                  style: const TextStyle(color: Colors.white), // Textfarbe im Dropdown
+                  dropdownColor: Colors.grey[850],
+                  style: const TextStyle(color: Colors.white),
                 ),
               ],
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _convertCurrency,
-              child: const Text('Convert'),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              _result == 0.0
-                  ? 'Enter amount to see the result'
-                  : 'Result: $_result $_toCurrency',
-              style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
           ],
         ),
