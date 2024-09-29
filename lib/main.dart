@@ -11,6 +11,7 @@ class CurrencyConverterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Building HomePage'); // Debugging-Print
     return MaterialApp(
       title: 'CurrenC',
       theme: ThemeData(
@@ -56,6 +57,11 @@ class _HomePageState extends State<HomePage> {
   DateTime? _lastUpdateTime; // Variable für die letzte Aktualisierungszeit
   final Duration _updateInterval = Duration(hours: 6); // Zeitgrenze für die Aktualisierung
 
+  List<String> europeanCurrencies = [
+    'USD', 'EUR', 'GBP', 'CHF', 'SEK', 'NOK', 'DKK', 'PLN', 'HUF', 'CZK', 'RUB', 'ISK',
+    'BGN', 'HRK', 'RON', 'TRY', 'UAH', 'MKD', 'ALL', 'GIP', 'MDL'
+  ];
+
   Map<String, double> exchangeRates = {
     'USD': 1.0,
     'EUR': 0.85,
@@ -75,9 +81,17 @@ class _HomePageState extends State<HomePage> {
       print('Rates fetched: $rates'); // Debugging-Print
 
       if (rates != null && rates.isNotEmpty) {
+        // Filtere nur europäische Währungen
+        Map<String, double> europeanRates = {};
+        for (String currency in europeanCurrencies) {
+          if (rates.containsKey(currency)) {
+            europeanRates[currency] = rates[currency]!;
+          }
+        }
+
         setState(() {
           exchangeRates.clear();
-          exchangeRates.addAll(rates);
+          exchangeRates.addAll(europeanRates);
           _lastUpdateTime = DateTime.now();
         });
       }
@@ -100,8 +114,11 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    // Debugging: Print die Wechselkurse
+    print('Available exchange rates: $exchangeRates');
+
     // Berechne den Wechselkurs zwischen den beiden ausgewählten Währungen
-    double exchangeRate = exchangeRates[_toCurrency]! / exchangeRates[_fromCurrency]!;
+    double exchangeRate = (exchangeRates[_toCurrency] ?? 0.0) / (exchangeRates[_fromCurrency] ?? 1.0);
 
     return Scaffold(
       appBar: AppBar(
@@ -263,11 +280,11 @@ class _HomePageState extends State<HomePage> {
         : double.tryParse(_fromAmountController.text) ?? 0.0;
 
     double fromRate = reverse
-        ? exchangeRates[_toCurrency]!
-        : exchangeRates[_fromCurrency]!;
+        ? exchangeRates[_toCurrency] ?? 1.0
+        : exchangeRates[_fromCurrency] ?? 1.0;
     double toRate = reverse
-        ? exchangeRates[_fromCurrency]!
-        : exchangeRates[_toCurrency]!;
+        ? exchangeRates[_fromCurrency] ?? 1.0
+        : exchangeRates[_toCurrency] ?? 1.0;
 
     setState(() {
       _result = (amount / fromRate) * toRate;
