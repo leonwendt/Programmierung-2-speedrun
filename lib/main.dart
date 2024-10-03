@@ -5,6 +5,8 @@ import 'currency_api.dart';
 import 'historical_rates_page.dart'; // Importiere die neue Seite
 import 'settings_page.dart'; // Importiere die neue Settings-Seite
 import 'feedback_page.dart';
+import 'info_page.dart';
+import 'analytics_page.dart';
 
 
 void main() {
@@ -152,7 +154,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.black87,
         actions: [
           IconButton(
-            icon: Icon(Icons.menu, color: Color(0xFFFFE4B5)), // Burger-Icon
+            icon: Icon(Icons.info, color: Color(0xFFFFE4B5)),
+            onPressed: () {
+              _showInfo(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.menu, color: Color(0xFFFFE4B5)), // Menu-Icon
             onPressed: () {
               _showMenu(context);
             },
@@ -359,6 +367,40 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
+    );
+  }
+  void _showInfo(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            color: Colors.grey[850],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  title: const Text('Analytics', style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AnalyticsPage()), // Hier AnalyticsPage hinzufügen
+                    );
+                  },
+                ),
+                ListTile(
+                  title: const Text('Information', style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const InfoPage()), // Hier InfoPage hinzufügen
+                    );
+                  },
+                ),
+                // Weitere Menüeinträge...
+              ]
+            ),
+          );
+        },
     );
   }
 }
