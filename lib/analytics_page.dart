@@ -46,7 +46,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     if (_isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Historische Wechselkurse'),
+          title: Text('Analytics'),
         ),
         body: Center(
           child: CircularProgressIndicator(),
@@ -56,7 +56,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Historische Wechselkurse'),
+        title: Text('Analytics'),
       ),
       body: _Analytics != null
           ? ListView.builder(
@@ -70,7 +70,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         },
       )
           : Center(
-        child: Text('Keine historischen Wechselkurse gefunden.'),
+        child: Text('Keine Analytics gefunden.'),
       ),
     );
   }

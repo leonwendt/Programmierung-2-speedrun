@@ -7,6 +7,7 @@ import 'settings_page.dart'; // Importiere die neue Settings-Seite
 import 'feedback_page.dart';
 import 'info_page.dart';
 import 'analytics_page.dart';
+import 'measures_page.dart';
 
 
 void main() {
@@ -70,6 +71,13 @@ class _HomePageState extends State<HomePage> {
   List<String> europeanCurrencies = [
     'USD', 'EUR', 'GBP', 'CHF', 'SEK', 'NOK', 'DKK', 'PLN', 'HUF', 'CZK', 'RUB', 'ISK',
     'BGN', 'HRK', 'RON', 'TRY', 'UAH', 'MKD', 'ALL', 'GIP', 'MDL'
+  ];
+
+  int _currentIndex = 1;
+  List<Widget> widgetList = const [
+    MeasuresPage(),
+    HomePage(),
+    InfoPage(),
   ];
 
   Map<String, double> exchangeRates = {
@@ -316,6 +324,28 @@ class _HomePageState extends State<HomePage> {
         },
         child: Icon(Icons.history, color: Color(0xFFFFE4B5)), // History Icon
         backgroundColor: Colors.black,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (int newIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
+        },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.format_list_numbered),
+              label: 'Measures',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'Info',
+            ),
+          ],
       ),
     );
   }
