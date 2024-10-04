@@ -61,6 +61,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _fromAmountController = TextEditingController();
   final TextEditingController _toAmountController = TextEditingController();
+  final TextEditingController _milesController = TextEditingController();
+  final TextEditingController _kilometersController = TextEditingController();
+  final TextEditingController _inchesController = TextEditingController();
+  final TextEditingController _centimetersController = TextEditingController();
+  final TextEditingController _yardsController = TextEditingController();
+  final TextEditingController _metersController = TextEditingController();
+  final TextEditingController _ouncesController = TextEditingController();
+  final TextEditingController _gramsController = TextEditingController();
+
   String _fromCurrency = 'USD';
   String _toCurrency = 'EUR';
   double _result = 0.0;
@@ -311,6 +320,418 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _milesController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertMilesToKilometers(false);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _kilometersController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertMilesToKilometers(true);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'miles',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '1 Meile',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 30,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '=',
+                      style: const TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '1,609344 km',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    'km',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _inchesController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertInchesToCentimeters(false);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _centimetersController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertInchesToCentimeters(true);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'inches',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '1 inch',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 30,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '=',
+                      style: const TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '2,54 cm',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    'cm',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _yardsController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertYardsToMeters(false);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _metersController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertYardsToMeters(true);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'yards',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '1 yard',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 30,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '=',
+                      style: const TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '0,9144 m',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    'm',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _ouncesController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertOuncesToGrams(false);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    child: TextField(
+                      controller: _gramsController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[800],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFFFE4B5),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Color(0xFFFFE4B5)),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        _convertOuncesToGrams(true);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'ounces',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '1 ounce',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 30,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '=',
+                      style: const TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '28,349523125 g',
+                          style: const TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    'g',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -356,14 +777,79 @@ class _HomePageState extends State<HomePage> {
 
     if (isToCurrency) {
       // Wenn der Benutzer den Zielbetrag ändert
-      toAmount = fromAmount * (exchangeRates[_toCurrency] ?? 0.0) / (exchangeRates[_fromCurrency] ?? 1.0);
-      _toAmountController.text = toAmount.toStringAsFixed(2);
+      double newFromAmount = toAmount * (exchangeRates[_fromCurrency] ?? 1.0) / (exchangeRates[_toCurrency] ?? 1.0);
+      if (newFromAmount != fromAmount) {
+        _fromAmountController.text = newFromAmount.toStringAsFixed(2);
+      }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
-      fromAmount = toAmount * (exchangeRates[_fromCurrency] ?? 1.0) / (exchangeRates[_toCurrency] ?? 0.0);
-      _fromAmountController.text = fromAmount.toStringAsFixed(2);
+      double newToAmount = fromAmount * (exchangeRates[_toCurrency] ?? 1.0) / (exchangeRates[_fromCurrency] ?? 1.0);
+      if (newToAmount != toAmount) {
+        _toAmountController.text = newToAmount.toStringAsFixed(2);
+      }
     }
   }
+
+  void _convertMilesToKilometers(bool isToMiles) {
+    double fromAmount = double.tryParse(_milesController.text) ?? 0.0;
+    double toAmount = double.tryParse(_kilometersController.text) ?? 0.0;
+
+    if (isToMiles) {
+      // Wenn der Benutzer den Zielbetrag ändert
+      toAmount = fromAmount * 1.609344; // Umrechnung von Meilen in Kilometer
+      _kilometersController.text = toAmount.toStringAsFixed(2);
+    } else {
+      // Wenn der Benutzer den Ausgangsbetrag ändert
+      toAmount = fromAmount / 1.609344; // Umrechnung von Kilometer in Meilen
+      _milesController.text = toAmount.toStringAsFixed(2);
+    }
+  }
+
+  void _convertInchesToCentimeters(bool isToInches) {
+    double fromAmount = double.tryParse(_inchesController.text) ?? 0.0;
+    double toAmount = double.tryParse(_centimetersController.text) ?? 0.0;
+
+    if (isToInches) {
+      // Wenn der Benutzer den Zielbetrag ändert
+      toAmount = fromAmount * 2.54; // Umrechnung von Zoll in Zentimeter
+      _centimetersController.text = toAmount.toStringAsFixed(2);
+    } else {
+      // Wenn der Benutzer den Ausgangsbetrag ändert
+      toAmount = fromAmount / 2.54; // Umrechnung von Zentimeter in Zoll
+      _inchesController.text = toAmount.toStringAsFixed(2);
+    }
+  }
+
+  void _convertYardsToMeters(bool isToYards) {
+    double fromAmount = double.tryParse(_yardsController.text) ?? 0.0;
+    double toAmount = double.tryParse(_metersController.text) ?? 0.0;
+
+    if (isToYards) {
+      // Wenn der Benutzer den Zielbetrag ändert
+      toAmount = fromAmount * 0.9144; // Umrechnung von Yards in Meter
+      _yardsController.text = toAmount.toStringAsFixed(2);
+    } else {
+      // Wenn der Benutzer den Ausgangsbetrag ändert
+      toAmount = fromAmount / 0.9144; // Umrechnung von Meter in Yards
+      _metersController.text = toAmount.toStringAsFixed(2);
+    }
+  }
+
+  void _convertOuncesToGrams(bool isToOunces) {
+    double fromAmount = double.tryParse(_ouncesController.text) ?? 0.0;
+    double toAmount = double.tryParse(_gramsController.text) ?? 0.0;
+
+    if (isToOunces) {
+      // Wenn der Benutzer den Zielbetrag ändert
+      toAmount = fromAmount * 28.349523125; // Umrechnung von Unzen in Gramm
+      _gramsController.text = toAmount.toStringAsFixed(2);
+    } else {
+      // Wenn der Benutzer den Ausgangsbetrag ändert
+      toAmount = fromAmount / 28.349523125; // Umrechnung von Gramm in Unzen
+      _ouncesController.text = toAmount.toStringAsFixed(2);
+    }
+  }
+
 
   void _showMenu(BuildContext context) {
     showModalBottomSheet(
