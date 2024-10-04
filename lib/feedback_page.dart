@@ -7,6 +7,55 @@ class FeedbackPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController _feedbackController = TextEditingController();
 
+    // Funktion zur Anzeige eines Bewertungsdialogs
+    Future<void> _showRatingDialog(BuildContext context) async {
+      double rating = 0;
+
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // Benutzer kann Dialog nicht schließen, ohne zu bewerten
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Bewertung abgeben'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('Bitte bewerten Sie die App:'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(5, (index) {
+                    return IconButton(
+                      icon: Icon(
+                        index < rating ? Icons.star : Icons.star_border,
+                        color: Colors.amber,
+                      ),
+                      onPressed: () {
+                        rating = index + 1.0;
+                        // Aktualisiere das Widget, um die gewählte Bewertung anzuzeigen
+                        (context as Element).markNeedsBuild();
+                      },
+                    );
+                  }),
+                ),
+                const SizedBox(height: 10),
+                Text('Ihre Bewertung: ${rating.toStringAsFixed(1)}'),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  // Hier kannst du die Logik für das Speichern oder Senden der Bewertung hinzufügen
+                  print('Bewertung: $rating'); // Temporäre Ausgabe in die Konsole
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Feedback'),
@@ -31,7 +80,14 @@ class FeedbackPage extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Hier kannst du die Logik für das Speichern oder Senden des Feedbacks hinzufügen
+                // Zeige den Bewertungsdialog an
+                _showRatingDialog(context);
+              },
+              child: const Text('Bewertung abgeben'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
                 String feedback = _feedbackController.text;
                 if (feedback.isNotEmpty) {
                   // Beispiel: Feedback speichern oder senden
