@@ -796,12 +796,16 @@ class _HomePageState extends State<HomePage> {
 
     if (isToMiles) {
       // Wenn der Benutzer den Zielbetrag ändert
-      toAmount = fromAmount * 1.609344; // Umrechnung von Meilen in Kilometer
-      _kilometersController.text = toAmount.toStringAsFixed(2);
+      toAmount = fromAmount * 1.609344;
+      if (_kilometersController.text != toAmount.toStringAsFixed(2)) {
+        _kilometersController.text = toAmount.toStringAsFixed(2);
+      }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
-      toAmount = fromAmount / 1.609344; // Umrechnung von Kilometer in Meilen
-      _milesController.text = toAmount.toStringAsFixed(2);
+      fromAmount = toAmount / 1.609344;
+      if (_milesController.text != fromAmount.toStringAsFixed(2)) {
+        _milesController.text = fromAmount.toStringAsFixed(2);
+      }
     }
   }
 
@@ -812,11 +816,15 @@ class _HomePageState extends State<HomePage> {
     if (isToInches) {
       // Wenn der Benutzer den Zielbetrag ändert
       toAmount = fromAmount * 2.54; // Umrechnung von Zoll in Zentimeter
-      _centimetersController.text = toAmount.toStringAsFixed(2);
+      if (_centimetersController.text != toAmount.toStringAsFixed(2)) {
+        _centimetersController.text = toAmount.toStringAsFixed(2);
+      }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
       toAmount = fromAmount / 2.54; // Umrechnung von Zentimeter in Zoll
-      _inchesController.text = toAmount.toStringAsFixed(2);
+      if (_inchesController.text != toAmount.toStringAsFixed(2)) {
+        _inchesController.text = toAmount.toStringAsFixed(2);
+      }
     }
   }
 
@@ -827,11 +835,15 @@ class _HomePageState extends State<HomePage> {
     if (isToYards) {
       // Wenn der Benutzer den Zielbetrag ändert
       toAmount = fromAmount * 0.9144; // Umrechnung von Yards in Meter
-      _yardsController.text = toAmount.toStringAsFixed(2);
+      if (_yardsController.text != toAmount.toStringAsFixed(2)) {
+        _yardsController.text = toAmount.toStringAsFixed(2);
+      }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
       toAmount = fromAmount / 0.9144; // Umrechnung von Meter in Yards
-      _metersController.text = toAmount.toStringAsFixed(2);
+      if (_metersController.text != toAmount.toStringAsFixed(2)) {
+        _metersController.text = toAmount.toStringAsFixed(2);
+      }
     }
   }
 
@@ -842,11 +854,15 @@ class _HomePageState extends State<HomePage> {
     if (isToOunces) {
       // Wenn der Benutzer den Zielbetrag ändert
       toAmount = fromAmount * 28.349523125; // Umrechnung von Unzen in Gramm
-      _gramsController.text = toAmount.toStringAsFixed(2);
+      if (_gramsController.text != toAmount.toStringAsFixed(2)) {
+        _gramsController.text = toAmount.toStringAsFixed(2);
+      }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
       toAmount = fromAmount / 28.349523125; // Umrechnung von Gramm in Unzen
-      _ouncesController.text = toAmount.toStringAsFixed(2);
+      if (_ouncesController.text != toAmount.toStringAsFixed(2)) {
+        _ouncesController.text = toAmount.toStringAsFixed(2);
+      }
     }
   }
 
