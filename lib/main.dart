@@ -391,7 +391,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '1 Meile',
+                          '1 mile',
                           style: const TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                       ],
@@ -763,8 +763,8 @@ class _HomePageState extends State<HomePage> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info',
+            icon: Icon(Icons.map_rounded),
+            label: 'Karte',
             ),
           ],
       ),
@@ -796,13 +796,13 @@ class _HomePageState extends State<HomePage> {
 
     if (isToMiles) {
       // Wenn der Benutzer den Zielbetrag ändert
-      toAmount = fromAmount * 1.609344;
+      toAmount = fromAmount * 1.61;
       if (_kilometersController.text != toAmount.toStringAsFixed(2)) {
         _kilometersController.text = toAmount.toStringAsFixed(2);
       }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
-      fromAmount = toAmount / 1.609344;
+      fromAmount = toAmount / 1.61;
       if (_milesController.text != fromAmount.toStringAsFixed(2)) {
         _milesController.text = fromAmount.toStringAsFixed(2);
       }
@@ -822,8 +822,8 @@ class _HomePageState extends State<HomePage> {
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
       toAmount = fromAmount / 2.54; // Umrechnung von Zentimeter in Zoll
-      if (_inchesController.text != toAmount.toStringAsFixed(2)) {
-        _inchesController.text = toAmount.toStringAsFixed(2);
+      if (_inchesController.text != fromAmount.toStringAsFixed(2)) {
+        _inchesController.text = fromAmount.toStringAsFixed(2);
       }
     }
   }
@@ -834,15 +834,15 @@ class _HomePageState extends State<HomePage> {
 
     if (isToYards) {
       // Wenn der Benutzer den Zielbetrag ändert
-      toAmount = fromAmount * 0.9144; // Umrechnung von Yards in Meter
+      toAmount = fromAmount * 0.91; // Umrechnung von Yards in Meter
       if (_yardsController.text != toAmount.toStringAsFixed(2)) {
         _yardsController.text = toAmount.toStringAsFixed(2);
       }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
-      toAmount = fromAmount / 0.9144; // Umrechnung von Meter in Yards
-      if (_metersController.text != toAmount.toStringAsFixed(2)) {
-        _metersController.text = toAmount.toStringAsFixed(2);
+      toAmount = fromAmount / 0.91; // Umrechnung von Meter in Yards
+      if (_metersController.text != fromAmount.toStringAsFixed(2)) {
+        _metersController.text = fromAmount.toStringAsFixed(2);
       }
     }
   }
@@ -853,15 +853,15 @@ class _HomePageState extends State<HomePage> {
 
     if (isToOunces) {
       // Wenn der Benutzer den Zielbetrag ändert
-      toAmount = fromAmount * 28.349523125; // Umrechnung von Unzen in Gramm
+      toAmount = fromAmount * 28.35; // Umrechnung von Unzen in Gramm
       if (_gramsController.text != toAmount.toStringAsFixed(2)) {
         _gramsController.text = toAmount.toStringAsFixed(2);
       }
     } else {
       // Wenn der Benutzer den Ausgangsbetrag ändert
-      toAmount = fromAmount / 28.349523125; // Umrechnung von Gramm in Unzen
-      if (_ouncesController.text != toAmount.toStringAsFixed(2)) {
-        _ouncesController.text = toAmount.toStringAsFixed(2);
+      toAmount = fromAmount / 28.35; // Umrechnung von Gramm in Unzen
+      if (_ouncesController.text != fromAmount.toStringAsFixed(2)) {
+        _ouncesController.text = fromAmount.toStringAsFixed(2);
       }
     }
   }
