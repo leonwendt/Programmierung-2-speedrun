@@ -111,12 +111,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _fetchExchangeRates() async {
+    print('Starte Abruf von Wechselkursen...');
     setState(() {
       _isLoading = true; // Ladezustand aktivieren
     });
 
     try {
       final rates = await CurrencyApi.fetchExchangeRates(_fromCurrency);
+      print('Wechselkurse erhalten: $rates');
 
       if (rates != null && rates.isNotEmpty) {
         // Filtere nur europäische Währungen
@@ -136,6 +138,7 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print('Fehler beim Abrufen der Wechselkurse: $e');
     } finally {
+      print('Beende Abruf von Wechselkursen.');
       setState(() {
         _isLoading = false; // Ladezustand beenden
       });
@@ -153,6 +156,8 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
+
+
 
     double exchangeRate = (exchangeRates[_toCurrency] ?? 0.0) / (exchangeRates[_fromCurrency] ?? 1.0);
 
@@ -746,6 +751,7 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.history, color: Color(0xFFFFE4B5)), // History Icon
         backgroundColor: Colors.black,
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
@@ -753,20 +759,20 @@ class _HomePageState extends State<HomePage> {
             _currentIndex = newIndex;
           });
         },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.format_list_numbered),
-              label: 'Measures',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.format_list_numbered),
+            label: 'Measures',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.info),
             label: 'Info',
-            ),
-          ],
+          ),
+        ],
       ),
     );
   }
@@ -903,11 +909,11 @@ class _HomePageState extends State<HomePage> {
   }
   void _showInfo(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            color: Colors.grey[850],
-            child: Column(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: Colors.grey[850],
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
@@ -930,9 +936,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 // Weitere Menüeinträge...
               ]
-            ),
-          );
-        },
+          ),
+        );
+      },
     );
   }
 }

@@ -5,21 +5,31 @@ class CurrencyApi {
   static final String _baseUrl = 'https://open.er-api.com/v6/';
 
   static Future<Map<String, double>> fetchExchangeRates(String baseCurrency) async {
-    final response = await http.get(Uri.parse('$_baseUrl/latest/$baseCurrency'));
+    print('Starte API-Aufruf für Basiswährung: $baseCurrency');
+    try {
+      final response = await http.get(Uri.parse('https://open.er-api.com/v6/latest/$baseCurrency')).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw Exception('Timeout: Anfrage hat zu lange gedauert');
+        },
+      );
+      print('API-Antwort erhalten: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('Daten erfolgreich dekodiert: $data');
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      print('Full API Data: $data'); // Vollständige API-Daten ausgeben
+        // Konvertiere Werte zu `double`
+        final rates = (data['rates'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(key, (value as num).toDouble()),
+        );
 
-      // Wir parsen die 'rates' und stellen sicher, dass alle Werte vom Typ double sind.
-      final Map<String, dynamic> rawRates = data['rates'];
-      final Map<String, double> rates = rawRates.map((key, value) {
-        return MapEntry(key, (value is int) ? value.toDouble() : value as double);
-      });
-
-      return rates;
-    } else {
-      throw Exception('Failed to load exchange rates');
+        return rates;
+      } else {
+        throw Exception('Fehlerhafte Antwort vom Server: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Fehler während des API-Aufrufs: $e');
+      return {};
     }
   }
 
